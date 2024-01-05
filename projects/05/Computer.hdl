@@ -11,11 +11,15 @@
  * From this point onwards, the user is at the mercy of the software:
  * Depending on the program's code, and whether the code is correct,
  * the screen may show some output, the user may be expected to enter
- * some input using the keyboard, or the program may do some procerssing. 
+ * some input using the keyboard, or the program may do some processing.
  */
 CHIP Computer {
     IN reset;
 
     PARTS:
-    //// Replace this comment with your code.
+    ROM32K(address=address, out=instruction);
+
+    CPU(inM=memoryOut, instruction=instruction, reset=reset, writeM=writeM, outM=outM, addressM=addressM, pc=address);
+
+    Memory(load=writeM, in=outM, address=addressM, out=memoryOut);
 }
